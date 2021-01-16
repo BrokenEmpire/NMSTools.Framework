@@ -54,11 +54,15 @@
     <Compile Include="Converters\Vector3Converter.cs" />
     <Compile Include="Converters\Vector4Converter.cs" />
     <Compile Include="Enums\GameType.cs" />
-    <Compile Include="Enums\InstancingType.cs" />
     <Compile Include="Enums\SaveType.cs" />
     <Compile Include="Extensions\MetaExtensions.cs" />
     <Compile Include="Extensions\XmlExtensions.cs" />
     <Compile Include="Meta\SaveSlot.cs" />
+    <Compile Include="Meta\TkGeometryData.cs" />
+    <Compile Include="Meta\TkGeometryStreamData.cs" />
+    <Compile Include="Meta\TkJointBindingData.cs" />
+    <Compile Include="Meta\TkJointExtentData.cs" />
+    <Compile Include="Meta\TkJointMirrorAxis.cs" />
     <Compile Include="Meta\TkMeshData.cs" />
     <Compile Include="Meta\TkMeshMetaData.cs" />
     <Compile Include="Meta\TkSceneNodeAttributeData.cs" />

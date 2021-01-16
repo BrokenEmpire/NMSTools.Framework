@@ -1,7 +1,5 @@
 ﻿namespace NMSTools.Framework.Meta
 {
-    using Enums;
-
     public class TkVertexElement
     {
         public int SemanticID;
@@ -9,7 +7,7 @@
         public int Type;
         public int Offset;
         public int Normalise;
-        public InstancingEnum Instancing;
+        public string Instancing;
         public string PlatformData;
     }
 }

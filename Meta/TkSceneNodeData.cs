@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml.Linq;
 
 namespace NMSTools.Framework.Meta
 {
-    using static Extensions.XmlExtensions;
     using static Extensions.MetaExtensions;
 
     public class TkSceneNodeData
