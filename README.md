@@ -4,6 +4,6 @@ A .net serialization framework for viewing and saving No Man's Sky save games.  
 
 The framework uses Newtonsoft.Json for Json parsing.
 
-Save file schema is based on No Man's Sky version 3.13 [Next Generation Update]
+Save file schema is based on No Man's Sky version 3.15 [Next Generation Update]
 
 The project is currently undergoing active development and is not ready for public use.
