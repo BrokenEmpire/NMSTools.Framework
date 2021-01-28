@@ -200,7 +200,6 @@ namespace NMSTools.Framework.Extensions
                     VertexElements = i.ReadTkVertexElement()
                 }).FirstOrDefault();
 
-
         internal static IList<TkVertexElement> ReadTkVertexElement(this XElement element)
             => element.Elements().Where(i => i.Attribute("name").Value.Equals("VertexElements"))
                 .FirstOrDefault()

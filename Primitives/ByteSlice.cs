@@ -77,14 +77,14 @@ namespace NMSTools.Framework.Primitives
             return false;
         }
 
-        public int ReadBytes(byte[] bytes, int offset)
+        public int ReadBytes(byte[] bytes, int offset = 0 )
         {
             B0 = bytes[offset];
             B1 = bytes[offset++];
 
             return offset++;
         }
-        public int WriteBytes(byte[] bytes, int offset)
+        public int WriteBytes(byte[] bytes, int offset = 0)
         {
             bytes[offset] = B0;
             bytes[offset++] = B1;

@@ -27,14 +27,13 @@ namespace NMSTools.Framework.Extensions
         public static float ReadTkPropertyAsFloat(this XElement element, string propertyName)
             => element.Elements()
             .Where(i => i.Attribute("name").Value.Equals(propertyName))
-            .Select(i => float.Parse(i.Attribute("value").Value))
-            .FirstOrDefault();
+                .Select(i => float.Parse(i.Attribute("value").Value))
+                .FirstOrDefault();
 
         public static byte[] ReadTkPropertyAsByteArray(this XElement element, string propertyName)
-            => element.Elements()
-            .Where(i => i.Attribute("name").Value.Equals(propertyName))
-            .Select(i => Convert.FromBase64String(i.Attribute("value").Value))
-            .FirstOrDefault();
+            => element.Elements().Where(i => i.Attribute("name").Value.Equals(propertyName))
+                .Select(i => Convert.FromBase64String(i.Attribute("value").Value))
+                .FirstOrDefault();
 
         public static float[] ReadTkPropertyAsFloatArray(this XElement element, string propertyName)
             => element.Elements()

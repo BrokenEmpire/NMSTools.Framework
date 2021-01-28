@@ -23,5 +23,7 @@ namespace NMSTools.Framework.Meta
 
             return root.ReadTkSceneNodeData();
         }
+
+        public override string ToString() => string.Format("TkSceneNodeData: {0} [{1}, {2}]", Name, NameHash, Type);
     }
 }
