@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Runtime.InteropServices;
 
 namespace NMSTools.Framework.Primitives
@@ -11,13 +10,13 @@ namespace NMSTools.Framework.Primitives
     public struct Half
     {
         [FieldOffset(0)]
-        public ushort Value;
-
-        [FieldOffset(0)]
         private readonly byte b1;
 
         [FieldOffset(1)]
         private readonly byte b0;
+
+        [FieldOffset(0)]
+        public ushort Value;
 
         private int Sign => Value >> 0x0F;
         private int Exponent => (Value >> 0x0A) & 0x1F;
@@ -133,16 +132,6 @@ namespace NMSTools.Framework.Primitives
             return hashCode;
         }
 
-        public override string ToString() => string.Format("{0:G18}", (float)this);
-        
-
-        //public static readonly Half Epsilon = new Half(1);
-        //public static readonly Half MaxValue = new Half(31743);
-       // public static readonly Half MinValue = Half.ToHalf(0xfbff);
-       // public static readonly Half NaN = Half.ToHalf(0xfe00);
-        //public static readonly Half NegativeInfinity = new Half(-1024);
-        //public static readonly Half PositiveInfinity = Half.ToHalf(0x7c00);
-        //public static readonly Half One = new Half(1.0f);
-       // public static readonly Half Zero = new Half(0.0f);
+        public override string ToString() => string.Format("{0:G18}", (float)this);      
     }
 }
