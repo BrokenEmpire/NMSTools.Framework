@@ -57,7 +57,6 @@
     <Compile Include="Enums\SaveType.cs" />
     <Compile Include="Extensions\MetaExtensions.cs" />
     <Compile Include="Extensions\XmlExtensions.cs" />
-    <Compile Include="Helpers\HalfHelper.cs" />
     <Compile Include="Meta\SaveSlot.cs" />
     <Compile Include="Meta\TkGeometryData.cs" />
     <Compile Include="Meta\TkGeometryStreamData.cs" />
@@ -149,14 +148,15 @@
     <Compile Include="Platforms\MicrosoftStore.cs" />
     <Compile Include="Platforms\Playstation.cs" />
     <Compile Include="Platforms\Steam.cs" />
-    <Compile Include="Primitives\ByteSlice.cs" />
     <Compile Include="Primitives\Half.cs" />
     <Compile Include="Primitives\Vector2.cs" />
     <Compile Include="Primitives\Vector3.cs" />
     <Compile Include="Primitives\Vector4.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

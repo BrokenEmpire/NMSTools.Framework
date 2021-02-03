@@ -1,230 +1,148 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace NMSTools.Framework.Primitives
 {
-    using Framework.Helpers;
-
-    public struct Half : IComparable, IFormattable, IConvertible, IComparable<Half>, IEquatable<Half>
+    /// <summary>
+    /// https://devblogs.microsoft.com/dotnet/introducing-the-half-type/
+    /// </summary>
+    [StructLayout(LayoutKind.Explicit, Size = 2)]
+    public struct Half
     {
-        /// <summary>
-        /// Internal representation of the half-precision floating-point number.
-        /// </summary>
-        internal ushort value;
+        [FieldOffset(0)]
+        public ushort Value;
 
-        /// <summary>
-        /// Represents the smallest positive System.Half value greater than zero.
-        /// </summary>
-        public static readonly Half Epsilon = Half.ToHalf(0x0001);
+        [FieldOffset(0)]
+        private readonly byte b1;
 
-        /// <summary>
-        /// Represents the largest possible value of System.Half.
-        /// </summary>
-        public static readonly Half MaxValue = Half.ToHalf(0x7bff);
+        [FieldOffset(1)]
+        private readonly byte b0;
 
-        /// <summary>
-        /// Represents the smallest possible value of System.Half.
-        /// </summary>
-        public static readonly Half MinValue = Half.ToHalf(0xfbff);
+        private int Sign => Value >> 0x0F;
+        private int Exponent => (Value >> 0x0A) & 0x1F;
+        private int Significand => Value & 0x03FF;
 
-        /// <summary>
-        /// Represents not a number (NaN).
-        /// </summary>
-        public static readonly Half NaN = Half.ToHalf(0xfe00);
-
-        /// <summary>
-        /// Represents negative infinity.
-        /// </summary>
-        public static readonly Half NegativeInfinity = Half.ToHalf(0xfc00);
-
-        /// <summary>
-        /// Represents positive infinity.
-        /// </summary>
-        public static readonly Half PositiveInfinity = Half.ToHalf(0x7c00);
-
-        /// <summary>
-        /// Represents the 1.0 constant.
-        /// </summary>
-        public static readonly Half One = new Half(1.0f);
-
-        /// <summary>
-        /// Represents the zero constant.
-        /// </summary>
-        public static readonly Half Zero = new Half(0.0f);
-
-
-        /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified single-precision floating-point number.
-        /// </summary>
-        /// <param name="value">The value to represent as a System.Half.</param>
-        public Half(float value) => this = HalfHelper.SingleToHalf(value);
-        /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified 32-bit signed integer.
-        /// </summary>
-        /// <param name="value">The value to represent as a System.Half.</param>
-        public Half(int value) : this((float)value) { }
-        /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified 64-bit signed integer.
-        /// </summary>
-        /// <param name="value">The value to represent as a System.Half.</param>
-        public Half(long value) : this((float)value) { }
-        /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified double-precision floating-point number.
-        /// </summary>
-        /// <param name="value">The value to represent as a System.Half.</param>
-        public Half(double value) : this((float)value) { }
-        /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified decimal number.
-        /// </summary>
-        /// <param name="value">The value to represent as a System.Half.</param>
-        public Half(decimal value) : this((float)value) { }
-        /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified 32-bit unsigned integer.
-        /// </summary>
-        /// <param name="value">The value to represent as a System.Half.</param>
-        public Half(uint value) : this((float)value) { }
-        /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified 64-bit unsigned integer.
-        /// </summary>
-        /// <param name="value">The value to represent as a System.Half.</param>
-        public Half(ulong value) : this((float)value) { }
-
-
-        /// <summary>
-        /// Returns a half-precision floating point number converted from two bytes
-        /// at a specified position in a byte array.
-        /// </summary>
-        /// <param name="value">An array of bytes.</param>
-        /// <param name="startIndex">The starting position within value.</param>
-        /// <returns>A half-precision floating point number formed by two bytes beginning at startIndex.</returns>
-        /// <exception cref="System.ArgumentException">
-        /// startIndex is greater than or equal to the length of value minus 1, and is
-        /// less than or equal to the length of value minus 1.
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">value is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">startIndex is less than zero or greater than the length of value minus 1.</exception>
-        public static Half ToHalf(byte[] value, int startIndex)
-            => ToHalf((ushort)BitConverter.ToInt16(value, startIndex));
-
-        /// <summary>
-        /// Returns a half-precision floating point number converted from its binary representation.
-        /// </summary>
-        /// <param name="bits">Binary representation of System.Half value</param>
-        /// <returns>A half-precision floating point number formed by its binary representation.</returns>
-        public static Half ToHalf(ushort bits)
+        public Half(ushort value)
         {
-            const ushort NegZero = (ushort)32768u;
-            const ushort Zero = (ushort)0u;
+            b1 = b0 = 0;
+            Value = value;
+        }
+        public Half(byte[] values)
+        {
+            Value = 0;
 
-            return new Half { value = bits == NegZero ? Zero : bits };
+            b1 = values[0];
+            b0 = values[1];
         }
 
-        public int CompareTo(object obj)
+        public byte this[int index]
         {
-            throw new NotImplementedException();
+            get
+            {
+                return index switch
+                {
+                    0 => b0,
+                    1 => b1,
+                    _ => default,
+                };
+            }
         }
 
-        public int CompareTo(Half other)
+        public static implicit operator ushort(Half obj) => obj.Value;
+        public static implicit operator float(Half obj) 
         {
-            throw new NotImplementedException();
+            if (obj.Exponent == 0)
+            {
+                if (obj.Significand == 0)
+                {
+                    if (obj.Sign == 0)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else
+                {
+                    return (float)(Math.Pow(-1, obj.Sign) * Math.Pow(2, -14) * (0 + (obj.Significand / 1024f)));
+                }
+            }
+            else if (obj.Exponent == 0x1F)
+            {
+                if (obj.Significand == 0)
+                {
+                    if (obj.Sign == 0)
+                    {
+                        // PositiveInfinity
+                        // ----------------------
+                        // 0x7C00
+                        // 31744
+                        // 0111 1100 0000 0000
+                        //Console.WriteLine("{0, 3}: {1, 20}  [F, {2, 5}]", i, "Positive Infinity", n);
+                    }
+                    else
+                    {
+                        // Negative Infinity
+                        // ----------------------
+                        // 0xFC00
+                        // -1024
+                        // 1111 1100 0000 0000
+                        //Console.WriteLine("{0, 3}: {1, 20}  [G, {2, 5}]", i, "Negative Infinity", n);
+                    }
+                }
+                else
+                {
+                    // NaN
+                    // ----------------------
+                    // 0xFE00
+                    // -512
+                    // 1111 1110 0000 0000
+                    //Console.WriteLine("{0, 3}: {1, 20:g18}  [E, {2, 5}]", i, "NaM", n);
+                }
+            }
+            else
+            {
+                return (float)(Math.Pow(-1, obj.Sign) * Math.Pow(2, obj.Exponent - 15) * (1 + (obj.Significand / 1024f)));
+            }
+
+            return 0f;
         }
 
-        public bool Equals(Half other)
+        public static implicit operator Half(ushort obj) => new Half(obj);
+
+        public static bool operator ==(Half left, Half right) => left.Value.Equals(right.Value);
+        public static bool operator !=(Half left, Half right) => !(left.Value == right.Value);
+
+        public override bool Equals(object obj)
         {
-            throw new NotImplementedException();
+            if (obj is Half t)
+                return t[0].Equals(b0) && t[1].Equals(b1);
+
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            int hashCode = 633813365;
+            hashCode = hashCode * -1521134295 + Value.GetHashCode();
+            hashCode = hashCode * -1521134295 + b1.GetHashCode();
+            hashCode = hashCode * -1521134295 + b0.GetHashCode();
+
+            return hashCode;
         }
 
-        public TypeCode GetTypeCode()
-        {
-            throw new NotImplementedException();
-        }
+        public override string ToString() => string.Format("{0:G18}", (float)this);
+        
 
-        public bool ToBoolean(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public byte ToByte(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public char ToChar(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DateTime ToDateTime(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public decimal ToDecimal(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public double ToDouble(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public short ToInt16(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int ToInt32(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public long ToInt64(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public sbyte ToSByte(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public float ToSingle(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string ToString(string format, IFormatProvider formatProvider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string ToString(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object ToType(Type conversionType, IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ushort ToUInt16(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public uint ToUInt32(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ulong ToUInt64(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
+        //public static readonly Half Epsilon = new Half(1);
+        //public static readonly Half MaxValue = new Half(31743);
+       // public static readonly Half MinValue = Half.ToHalf(0xfbff);
+       // public static readonly Half NaN = Half.ToHalf(0xfe00);
+        //public static readonly Half NegativeInfinity = new Half(-1024);
+        //public static readonly Half PositiveInfinity = Half.ToHalf(0x7c00);
+        //public static readonly Half One = new Half(1.0f);
+       // public static readonly Half Zero = new Half(0.0f);
     }
 }
