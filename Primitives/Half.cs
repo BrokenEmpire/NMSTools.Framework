@@ -43,12 +43,14 @@ namespace NMSTools.Framework.Primitives
                 {
                     0 => b0,
                     1 => b1,
-                    _ => default,
+                    _ => default
                 };
             }
         }
 
         public static implicit operator ushort(Half obj) => obj.Value;
+        public static implicit operator Half(ushort obj) => new Half(obj);
+
         public static implicit operator float(Half obj) 
         {
             if (obj.Exponent == 0)
@@ -109,8 +111,6 @@ namespace NMSTools.Framework.Primitives
 
             return 0f;
         }
-
-        public static implicit operator Half(ushort obj) => new Half(obj);
 
         public static bool operator ==(Half left, Half right) => left.Value.Equals(right.Value);
         public static bool operator !=(Half left, Half right) => !(left.Value == right.Value);

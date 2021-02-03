@@ -148,7 +148,9 @@
     <Compile Include="Platforms\MicrosoftStore.cs" />
     <Compile Include="Platforms\Playstation.cs" />
     <Compile Include="Platforms\Steam.cs" />
+    <Compile Include="Primitives\GL_UByte.cs" />
     <Compile Include="Primitives\Half.cs" />
+    <Compile Include="Primitives\INT_2_10_10_10_REV.cs" />
     <Compile Include="Primitives\Vector2.cs" />
     <Compile Include="Primitives\Vector3.cs" />
     <Compile Include="Primitives\Vector4.cs" />
