@@ -8,7 +8,7 @@ namespace NMSTools.Framework.Extensions
 
     public static class MetaExtensions
     {
-        internal static TkSceneNodeData ReadTkSceneNodeData(this XElement element)
+        public static TkSceneNodeData ReadTkSceneNodeData(this XElement element)
             => new TkSceneNodeData
             {
                 Name = element.ReadTkPropertyAsString("Name"),
@@ -19,7 +19,7 @@ namespace NMSTools.Framework.Extensions
                 Children = element.ReadTkSceneNodeChildren()
             };
 
-        internal static TkTransformData ReadTkTransformData(this XElement element)
+        public static TkTransformData ReadTkTransformData(this XElement element)
             => element.Elements().Where(i => i.Attribute("name").Value.Equals("Transform") && i.Attribute("value").Value.Equals("TkTransformData.xml"))
                 .Select(i => new TkTransformData
                 {
@@ -34,7 +34,7 @@ namespace NMSTools.Framework.Extensions
                     ScaleZ = i.ReadTkPropertyAsFloat("ScaleZ")
                 }).FirstOrDefault();
 
-        internal static IList<TkSceneNodeAttributeData> ReadTkSceneNodeAttributes(this XElement element)
+        public static IList<TkSceneNodeAttributeData> ReadTkSceneNodeAttributes(this XElement element)
             => element.Elements().Where(i => i.Attribute("name").Value.Equals("Attributes"))
                 .FirstOrDefault()
                 .Elements()
@@ -45,20 +45,20 @@ namespace NMSTools.Framework.Extensions
                     Value = i.ReadTkPropertyAsString("Value")
                 }).ToList();
 
-        internal static IList<TkSceneNodeData> ReadTkSceneNodeChildren(this XElement element)
+        public static IList<TkSceneNodeData> ReadTkSceneNodeChildren(this XElement element)
             => element.Elements().Where(i => i.Attribute("name").Value.Equals("Children"))
                 .FirstOrDefault()
                 .Elements()
                 .Select(i => i.ReadTkSceneNodeData())
                 .ToList();
 
-        internal static TkGeometryStreamData ReadTkGeometryStreamData(this XElement element)
+        public static TkGeometryStreamData ReadTkGeometryStreamData(this XElement element)
             => element.Elements().Select(i => new TkGeometryStreamData
             {
                 StreamDataArray = i.Elements().Select(i => i.ReadTkMeshData()).ToList()
             }).FirstOrDefault();
 
-        internal static TkGeometryData ReadTkGeometryData(this XElement element)
+        public static TkGeometryData ReadTkGeometryData(this XElement element)
             => new TkGeometryData
             {
                 VertexCount = element.ReadTkPropertyAsInt("VertexCount"),
@@ -84,7 +84,7 @@ namespace NMSTools.Framework.Extensions
                 StreamMetaDataArray = element.ReadTkMeshMetaData()
             };
 
-        internal static TkMeshData ReadTkMeshData(this XElement element)
+        public static TkMeshData ReadTkMeshData(this XElement element)
             => new TkMeshData
             {
                 IdString = element.ReadTkPropertyAsString("IdString"),
@@ -94,7 +94,7 @@ namespace NMSTools.Framework.Extensions
                 MeshDataStream = element.ReadTkPropertyAsByteArray("MeshDataStream")
             };
 
-        internal static IList<TkJointBindingData> ReadTkJointBindingData(this XElement element)
+        public static IList<TkJointBindingData> ReadTkJointBindingData(this XElement element)
         {
             var elements = element.Elements().Where(i => i.Attribute("name").Value.Equals("JointBindings"));
             if (!elements.Any())
@@ -112,7 +112,7 @@ namespace NMSTools.Framework.Extensions
                 }).ToList();
         }
 
-        internal static IList<TkJointExtentData> ReadTkJointExtentData(this XElement element)
+        public static IList<TkJointExtentData> ReadTkJointExtentData(this XElement element)
         {
             var elements = element.Elements().Where(i => i.Attribute("name").Value.Equals("JointExtents"));
             if (!elements.Any())
@@ -130,7 +130,7 @@ namespace NMSTools.Framework.Extensions
                 }).ToList();
         }
 
-        internal static IList<TkJointMirrorAxis> ReadTkJointMirrorAxis(this XElement element)
+        public static IList<TkJointMirrorAxis> ReadTkJointMirrorAxis(this XElement element)
         {
             var elements = element.Elements().Where(i => i.Attribute("name").Value.Equals("JointMirrorAxes"));
             if (!elements.Any())
@@ -155,7 +155,7 @@ namespace NMSTools.Framework.Extensions
                 }).ToList();
         }
 
-        internal static IList<TkVector4f> ReadTkVectorArray(this XElement element, string propertyName)
+        public static IList<TkVector4f> ReadTkVectorArray(this XElement element, string propertyName)
         {
             var elements = element.Elements().Where(i => i.Attribute("name").Value.Equals(propertyName));
             if (!elements.Any())
@@ -167,7 +167,7 @@ namespace NMSTools.Framework.Extensions
                 .ToList();
         }
 
-        internal static IList<TkMeshMetaData> ReadTkMeshMetaData(this XElement element)
+        public static IList<TkMeshMetaData> ReadTkMeshMetaData(this XElement element)
             => element.Elements().Where(i => i.Attribute("name").Value.Equals("StreamMetaDataArray"))
                 .FirstOrDefault()
                 .Elements()
@@ -181,7 +181,7 @@ namespace NMSTools.Framework.Extensions
                     IndexDataOffset = i.ReadTkPropertyAsInt("IndexDataOffset")
                 }).ToList();
 
-        internal static TkVector4f ReadTkVector4f(this XElement element)
+        public static TkVector4f ReadTkVector4f(this XElement element)
             => new TkVector4f
             {
                 x = element.ReadTkPropertyAsFloat("x"),
@@ -190,7 +190,7 @@ namespace NMSTools.Framework.Extensions
                 t = element.ReadTkPropertyAsFloat("t"),
             };
 
-        internal static TkVertexLayout ReadTkVertexLayout(this XElement element, string propertyName)
+        public static TkVertexLayout ReadTkVertexLayout(this XElement element, string propertyName)
             => element.Elements().Where(i => i.Attribute("name").Value.Equals(propertyName) && i.Attribute("value").Value.Equals("TkVertexLayout.xml"))
                 .Select(i => new TkVertexLayout
                 {
@@ -200,7 +200,7 @@ namespace NMSTools.Framework.Extensions
                     VertexElements = i.ReadTkVertexElement()
                 }).FirstOrDefault();
 
-        internal static IList<TkVertexElement> ReadTkVertexElement(this XElement element)
+        public static IList<TkVertexElement> ReadTkVertexElement(this XElement element)
             => element.Elements().Where(i => i.Attribute("name").Value.Equals("VertexElements"))
                 .FirstOrDefault()
                 .Elements()

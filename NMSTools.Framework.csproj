@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\ConverterBase.cs" />
+    <Compile Include="Base\TkMetaBase.cs" />
     <Compile Include="Base\ModelBase.cs" />
     <Compile Include="Base\PlatformBase.cs" />
     <Compile Include="Converters\DoubleConverter.cs" />
@@ -55,7 +56,9 @@
     <Compile Include="Converters\Vector4Converter.cs" />
     <Compile Include="Enums\GameType.cs" />
     <Compile Include="Enums\SaveType.cs" />
+    <Compile Include="Extensions\IOExtensions.cs" />
     <Compile Include="Extensions\MetaExtensions.cs" />
+    <Compile Include="Extensions\NumericExtensions.cs" />
     <Compile Include="Extensions\XmlExtensions.cs" />
     <Compile Include="Meta\SaveSlot.cs" />
     <Compile Include="Meta\TkGeometryData.cs" />

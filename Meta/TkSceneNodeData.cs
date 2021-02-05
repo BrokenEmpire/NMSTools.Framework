@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Xml.Linq;
 
 namespace NMSTools.Framework.Meta
 {
-    using static Extensions.MetaExtensions;
-
     public class TkSceneNodeData
     {
         public string Name;
@@ -16,13 +12,7 @@ namespace NMSTools.Framework.Meta
         public IList<TkSceneNodeAttributeData> Attributes;
         public IList<TkSceneNodeData> Children;
 
-        //todo: move to NMSTools.Serialization
-        public static TkSceneNodeData Load(Stream inputStream)
-        {
-            var xdoc = XDocument.Load(inputStream);
-            var root = xdoc.Element("Data");
-
-            return root.ReadTkSceneNodeData();
-        }
+        public override string ToString() 
+            => string.Format("Name: {0}, Hash: {1}, Type: {2}, A: {3}, C: {4}", Name, NameHash, Type, Attributes.Count, Children.Count);
     }
 }

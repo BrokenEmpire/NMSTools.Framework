@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Xml.Linq;
 
 namespace NMSTools.Framework.Meta
 {
-    using static Extensions.MetaExtensions;
-
     public class TkGeometryData
     {
         public int VertexCount;
@@ -35,14 +31,5 @@ namespace NMSTools.Framework.Meta
 
         public IList<int> IndexBuffer;
         public IList<TkMeshMetaData> StreamMetaDataArray;
-
-        //todo: move to NMSTools.Serialization
-        public static TkGeometryData Load(Stream inputStream)
-        {
-            var xdoc = XDocument.Load(inputStream);
-            var root = xdoc.Element("Data");
-
-            return root.ReadTkGeometryData();
-        }
     }
 }
