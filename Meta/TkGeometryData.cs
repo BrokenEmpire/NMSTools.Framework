@@ -36,6 +36,7 @@ namespace NMSTools.Framework.Meta
         public IList<int> IndexBuffer;
         public IList<TkMeshMetaData> StreamMetaDataArray;
 
+        //todo: move to NMSTools.Serialization
         public static TkGeometryData Load(Stream inputStream)
         {
             var xdoc = XDocument.Load(inputStream);

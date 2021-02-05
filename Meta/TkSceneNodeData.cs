@@ -16,6 +16,7 @@ namespace NMSTools.Framework.Meta
         public IList<TkSceneNodeAttributeData> Attributes;
         public IList<TkSceneNodeData> Children;
 
+        //todo: move to NMSTools.Serialization
         public static TkSceneNodeData Load(Stream inputStream)
         {
             var xdoc = XDocument.Load(inputStream);

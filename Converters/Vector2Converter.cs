@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace NMSTools.Framework.Converters
 {
-    using Base;
     using Framework.Primitives;
+    using Base;
 
     public sealed class Vector2Converter : ConverterBase<Vector2>
     {

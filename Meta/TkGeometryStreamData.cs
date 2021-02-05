@@ -10,6 +10,7 @@ namespace NMSTools.Framework.Meta
     {
         public IList<TkMeshData> StreamDataArray;
 
+        //todo: move to NMSTools.Serialization
         public static TkGeometryStreamData Load(Stream inputStream)
         {
             var xdoc = XDocument.Load(inputStream);

@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace NMSTools.Framework.Converters
 {
-    using Base;
     using Framework.Primitives;
+    using Base;
 
     public sealed class Vector3Converter : ConverterBase<Vector3>
     {
@@ -35,7 +35,7 @@ namespace NMSTools.Framework.Converters
                 throw new JsonWriterException("Unexpected object type");
 
             writer.WriteStartArray();
-                 
+
             writer.WriteRawValue(Format(vector[0]));
             writer.WriteRawValue(Format(vector[1]));
             writer.WriteRawValue(Format(vector[2]));
