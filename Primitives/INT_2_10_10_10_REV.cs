@@ -66,7 +66,7 @@ namespace NMSTools.Framework.Primitives
                 (obj.Value & (selector << 0x0A)) >> 0x0A,
                 (obj.Value & (selector << 0x14)) >> 0x14,
                 (obj.Value & (selector << 0x1E)) >> 0x1E
-            }.Select(i => ((i & mask) * -1) + (i & ~mask)).ToArray();
+            }.Select(i => (-1 * (i & mask)) + (i & ~mask)).ToArray();
 
             var magnitude = Math.Pow(Math.Pow(raw[0], 2) + Math.Pow(raw[1], 2) + Math.Pow(raw[2], 2), 0.5f);
 
